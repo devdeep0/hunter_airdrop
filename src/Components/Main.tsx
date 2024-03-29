@@ -78,7 +78,7 @@ const Main: React.FC = () => {
         
         </div>
       </button>
-      {nftBalance !== 0 ? <p>Sorry you are not eligible for this!</p> : 
+      {nftBalance === 0 ? <p>Sorry you are not eligible for this!</p> : 
       <>
         <input type="text" className='text-black h-' />
         <button>
