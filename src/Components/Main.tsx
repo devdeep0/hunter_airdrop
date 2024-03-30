@@ -1,18 +1,35 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useAddress } from "@thirdweb-dev/react";
 import { ethers } from "ethers";
 import { Meteors } from "@/Components/ui/meteors";
 import { CONTRACT_ADDRESSES } from "../utils/constants";
 import { ConnectWallet,darkTheme,} from "@thirdweb-dev/react"
-import { Button } from "@/Components/ui/moving-border";
+
 import Image from 'next/image';
-import { Input } from 'postcss';
+
+
+import { Button } from "@/Components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/Components/ui/dialog"
+import { Input } from "@/Components/ui/input"
+import { Label } from "@/Components/ui/label"
+
+
+
 
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   const [nftBalance, setNftBalance] = useState<number | null>(null);
+
 
   // Function to fetch NFT balance, which can now safely use the walletAddress from the hook
   const fetchNFTBalance = async () => {
@@ -70,22 +87,50 @@ const Main: React.FC = () => {
           <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
             Check if you have got enough balance!
           </p>
+          
           <button className="p-[3px] relative"  onClick={fetchNFTBalance}>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
         <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
         Check Balance
-        {nftBalance !== null && <p>NFT Balance: {nftBalance}</p>}
-        
         </div>
       </button>
-      {nftBalance === 0 ? <p>Sorry you are not eligible for this!</p> : 
-      <>
-        <input type="text" className='text-black h-' />
-        <button>
-          submit
-        </button>
+
+      { nftBalance !== null && (
+    <>
+      
+      {nftBalance !== 0 ? (
+        <>
+        <p className='text-white'>NFT Balance: {nftBalance}</p>
+        <p className='text-red-600'>Sorry, you are not eligible for this!</p>
         </>
-        }
+      ) : (
+        <>
+         <Dialog>
+         <span className='text-white '>yay! You are eligible for your ERC-20 </span>
+      <DialogTrigger asChild>
+       <span className='text-red-600 cursor-pointer'>claim it</span>
+      </DialogTrigger>
+      
+      <DialogContent className="sm:max-w-[425px]">
+        
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Contract Address
+            </Label>
+            <Input id="name" className="col-span-3" />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button type="submit">Done</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+        </>
+      )}
+    </>
+  )
+}
           
          {/* Meaty part - Meteor effect */}
          <Meteors number={20} />

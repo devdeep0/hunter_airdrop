@@ -1,6 +1,6 @@
 // Define and export your constants here
 export const CONTRACT_ADDRESSES = {
-    nftContract: "0xF79a06B6A2808B92d6998F878f4bCDd437C6450B",
+    nftContract: "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6",
     // You can add other contract addresses or related constants here
   };
   
