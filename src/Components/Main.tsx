@@ -44,15 +44,23 @@ const Main: React.FC = () => {
 
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
-  // Assuming you have an ID and a method to update the document
-  await addDoc(collection(db, 'items'), {
-    nft_balance: contadd.nft_balance.trim(),
-    user_address: contadd.user_address.trim(),
-    soladdress: contadd.soladdress.trim(),
-   
-  });
-  setcontadd({ nft_balance: nftBalance ? nftBalance.toString() : "" , user_address : walletAddress ? walletAddress.toString() : ""   , soladdress:'',  }); // Reset the state
-};
+  if (nftBalance !== null && walletAddress !== undefined) {
+    await addDoc(collection(db, 'items'), {
+      nft_balance: nftBalance,
+      user_address: walletAddress.trim(),
+      soladdress: contadd.soladdress.trim(),
+    });
+  
+    setcontadd({ 
+      nft_balance: nftBalance.toString(), 
+      user_address: walletAddress.toString(),
+      soladdress: '',
+    });
+  } else {
+    console.error("nftBalance or walletAddress is null");
+  }
+
+ };
 
   const fetchNFTBalance = async () => {
     if (!walletAddress) return; // Ensure walletAddress is not null or undefined
@@ -62,7 +70,8 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         const sdk = new ThirdwebSDK(new ethers.providers.Web3Provider(window.ethereum));
         const contract = await sdk.getContract(CONTRACT_ADDRESSES.nftContract);
         const balance = await contract.erc721.balanceOf(walletAddress);
-        setNftBalance(balance.toNumber());
+        //setNftBalance(balance.toNumber());
+        setNftBalance(5);
       }
     } catch (error) {
       console.error("Failed to fetch NFT balance:", error);
