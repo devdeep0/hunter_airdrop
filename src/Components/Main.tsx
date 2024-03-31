@@ -55,9 +55,9 @@ const Main: React.FC = () => {
   const Setaddress = async () => {
     try {
      
-      // const response = await axios.post("/contract", contadd)
-      const rex = await axios.get("/checkres")
-      console.log("error", rex)
+      const response = await axios.post("/api/contract", contadd)
+      
+      console.log("signup success", response.data);
       
     } catch (error:any) {
       console.log("failed to get");

@@ -4,10 +4,11 @@ import User from "@/Schema/UserSchema"
 import { NextRequest, NextResponse } from "next/server"
 
 
-connect()
+
 
 export async function POST(request: NextRequest , response : NextResponse){
     try {
+      connect()
         const reqBody = await request.json()
         const {contractaddress}=reqBody
         console.log(contractaddress);
