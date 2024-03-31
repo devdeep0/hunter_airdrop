@@ -8,7 +8,8 @@ import { CONTRACT_ADDRESSES } from "../utils/constants";
 import { ConnectWallet,darkTheme,} from "@thirdweb-dev/react"
 import axios from "axios"
 import Image from 'next/image';
-
+import { collection, addDoc } from "firebase/firestore"; 
+import {db} from "@/Firebase/firebase"
 
 import { Button } from "@/Components/ui/button"
 import {
@@ -36,6 +37,15 @@ const Main: React.FC = () => {
     contractaddress : ""
   })
   
+//  const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+//     e.preventDefault();
+//       await addDoc(collection(db, 'items'), {
+//         contractaddress: contadd.contractaddress.trim(),
+//        });
+//       setcontadd({ contractaddress: '', });
+//     }
+//   };
+
   const fetchNFTBalance = async () => {
     if (!walletAddress) return; // Ensure walletAddress is not null or undefined
 
@@ -51,31 +61,11 @@ const Main: React.FC = () => {
       setNftBalance(null); // Reset or handle the error as appropriate
     }
   };
-
-  const Setaddress = async () => {
-    try {
-     
-        const baseURL = process.env.NODE_ENV === 'production'
-        ? 'https://dev9452.d2rn19vui43cce.amplifyapp.com/'
-        : 'http://localhost:3000'; // Adjust localhost port if necessary
-
-      const response = await axios.post(`${baseURL}/api/contract`, contadd, {
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
-
-      
-    } catch (error:any) {
-      console.log("failed to get");
-      
-    }
-  }
   
-  function handleInputChange(e:any) {
-    // Assuming setContadd is your state updater function
-    setcontadd({ ...contadd, contractaddress: e.target.value });
-  }
+  
+ 
+
+ 
   return (
     <div className=' h-screen w-screen flex flex-col justify-center items-center' style={{
       backgroundImage: "url('/sold_desktop.20ec5a55.png')",
@@ -147,11 +137,11 @@ const Main: React.FC = () => {
             <Label htmlFor="name" className="text-right">
               Sol Wallet Address
             </Label>
-            <Input onChange={handleInputChange}  value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
+            <Input  onChange={(e) => setcontadd({ ...contadd, contractaddress: e.target.value })}  value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={Setaddress} >Done</Button>
+          <Button type="submit" onClick={addItem} >Done</Button>
          
         </DialogFooter>
         </form>

@@ -4,6 +4,4 @@ export const CONTRACT_ADDRESSES = {
     // You can add other contract addresses or related constants here
   };
   
-  export const MONGO_URI = {
-    mongodb : "mongodb+srv://nfthunter69:hunter123gg@hunter-airdrop.thoofrg.mongodb.net/"
-  }
+ 
