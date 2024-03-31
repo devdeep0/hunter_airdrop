@@ -30,11 +30,12 @@ import { log } from 'console';
 
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
+  
   const [nftBalance, setNftBalance] = useState<number | null>(null);
   const [contadd , setcontadd] = useState({
     contractaddress : ""
   })
-
+  
   const fetchNFTBalance = async () => {
     if (!walletAddress) return; // Ensure walletAddress is not null or undefined
 
@@ -53,6 +54,7 @@ const Main: React.FC = () => {
 
   const Setaddress = async () => {
     try {
+     
       const response = await axios.post("/contract", contadd)
       console.log("signup success", response.data);
       
