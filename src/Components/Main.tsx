@@ -25,7 +25,8 @@ import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
 import { id } from 'ethers/lib/utils';
 import { log } from 'console';
-
+import { ToastAction } from "@/Components/ui/toast"
+import { useToast } from "@/Components/ui/use-toast"
 
 
 
@@ -34,24 +35,23 @@ const Main: React.FC = () => {
   
   const [nftBalance, setNftBalance] = useState<number | null>(null);
   const [contadd , setcontadd] = useState({
-    contractaddress : ""
+    nft_balance   : "",
+    user_address : "",
+    soladdress : "",
+   
   })
   
-//  const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-//     e.preventDefault();
-//       await addDoc(collection(db, 'items'), {
-//         contractaddress: contadd.contractaddress.trim(),
-//        });
-//       setcontadd({ contractaddress: '', });
-//     }
-//   };
+
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   // Assuming you have an ID and a method to update the document
   await addDoc(collection(db, 'items'), {
-    contractaddress: contadd.contractaddress.trim(),
+    nft_balance: contadd.nft_balance.trim(),
+    user_address: contadd.user_address.trim(),
+    soladdress: contadd.soladdress.trim(),
+   
   });
-  setcontadd({ contractaddress: '', }); // Reset the state
+  setcontadd({ nft_balance: nftBalance ? nftBalance.toString() : "" , user_address : walletAddress ? walletAddress.toString() : ""   , soladdress:'',  }); // Reset the state
 };
 
   const fetchNFTBalance = async () => {
@@ -71,7 +71,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   };
   
   
- 
+  const { toast } = useToast()
 
  
   return (
@@ -145,11 +145,17 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
             <Label htmlFor="name" className="text-right">
               Sol Wallet Address
             </Label>
-            <Input  onChange={(e) => setcontadd({ ...contadd, contractaddress: e.target.value })}  value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
+            <Input  onChange={(e) => setcontadd({ ...contadd, soladdress: e.target.value })}  value={contadd.soladdress}  id="solcontract" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" >Done</Button>
+          <Button onClick={() => {
+        toast({
+          title: "You did it",
+          description: "Thanks for being with us!",
+          
+        })
+      }} type="submit" >Done</Button>
          
         </DialogFooter>
         </form>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThirdwebProvider,  metamaskWallet, embeddedWallet, smartWallet, localWallet,rabbyWallet, okxWallet, coinbaseWallet,walletConnect, safeWallet } from "@thirdweb-dev/react"
-
+import { Toaster } from "@/Components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
 /*
@@ -68,7 +68,9 @@ export default function RootLayout({
     >
 
        {children}
+      
        </ThirdwebProvider>
+       <Toaster />
         </body>
     </html>
   );
