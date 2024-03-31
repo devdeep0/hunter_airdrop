@@ -56,7 +56,7 @@ const Main: React.FC = () => {
     try {
      
         const baseURL = process.env.NODE_ENV === 'production'
-        ? 'https://hunter-airdrop.vercel.app'
+        ? 'https://dev9452.d2rn19vui43cce.amplifyapp.com/'
         : 'http://localhost:3000'; // Adjust localhost port if necessary
 
       const response = await axios.post(`${baseURL}/api/contract`, contadd, {

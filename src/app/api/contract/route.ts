@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import {connect} from "@/db/connectDB"
 import User from "@/Schema/UserSchema"
 import { NextRequest, NextResponse } from "next/server"
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 
 
