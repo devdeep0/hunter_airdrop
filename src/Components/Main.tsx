@@ -55,8 +55,16 @@ const Main: React.FC = () => {
   const Setaddress = async () => {
     try {
      
-      const response = await axios.post("/api/contract", contadd)
-      console.log("signup success", response.data);
+        const baseURL = process.env.NODE_ENV === 'production'
+        ? 'https://hunter-airdrop.vercel.app'
+        : 'http://localhost:3000'; // Adjust localhost port if necessary
+
+      const response = await axios.post(`${baseURL}/api/contract`, contadd, {
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
+
       
     } catch (error:any) {
       console.log("failed to get");
