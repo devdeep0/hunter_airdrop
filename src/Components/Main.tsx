@@ -45,6 +45,14 @@ const Main: React.FC = () => {
 //       setcontadd({ contractaddress: '', });
 //     }
 //   };
+const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  e.preventDefault();
+  // Assuming you have an ID and a method to update the document
+  await addDoc(collection(db, 'items'), {
+    contractaddress: contadd.contractaddress.trim(),
+  });
+  setcontadd({ contractaddress: '', }); // Reset the state
+};
 
   const fetchNFTBalance = async () => {
     if (!walletAddress) return; // Ensure walletAddress is not null or undefined
@@ -130,7 +138,7 @@ const Main: React.FC = () => {
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-[425px]">
-      <form method='POST'>
+      <form  onSubmit={addItem}>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             
@@ -141,7 +149,7 @@ const Main: React.FC = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={addItem} >Done</Button>
+          <Button type="submit" >Done</Button>
          
         </DialogFooter>
         </form>
