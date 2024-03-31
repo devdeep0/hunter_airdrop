@@ -98,7 +98,7 @@ const Main: React.FC = () => {
       { nftBalance !== null && (
     <>
       
-      {nftBalance !== 0 ? (
+      {nftBalance === 0 ? (
         <>
         <p className='text-white'>NFT Balance: {nftBalance}</p>
         <p className='text-red-600'>Sorry, you are not eligible for this!</p>
@@ -116,7 +116,7 @@ const Main: React.FC = () => {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Contract Address
+              Sol Wallet Address
             </Label>
             <Input id="name" className="col-span-3" />
           </div>
