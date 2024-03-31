@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-
+import { MONGO_URI } from '@/utils/constants';
 export async function connect() {
     try {
-        mongoose.connect(process.env.MONGO_URI!);
+        mongoose.connect(process.env.MONGO_URI || MONGO_URI.mongodb!);
         const connection = mongoose.connection;
 
         connection.on('connected', () => {
