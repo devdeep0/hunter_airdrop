@@ -62,7 +62,10 @@ const Main: React.FC = () => {
     }
   }
   
- 
+  function handleInputChange(e:any) {
+    // Assuming setContadd is your state updater function
+    setcontadd({ ...contadd, contractaddress: e.target.value });
+  }
   return (
     <div className=' h-screen w-screen flex flex-col justify-center items-center' style={{
       backgroundImage: "url('/sold_desktop.20ec5a55.png')",
@@ -134,7 +137,7 @@ const Main: React.FC = () => {
             <Label htmlFor="name" className="text-right">
               Sol Wallet Address
             </Label>
-            <Input value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
+            <Input onChange={handleInputChange}  value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
