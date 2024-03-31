@@ -55,13 +55,7 @@ const Main: React.FC = () => {
   const Setaddress = async () => {
     try {
      
-      const baseURL = 'https://hunter-airdrop.vercel.app/';
-        const response = await axios.post(`${baseURL}/api/contract`, contadd, {
-            headers: {
-                "Content-Type": "application/json",
-            }
-          })
-      
+      const response = await axios.post("/api/contract", contadd)
       console.log("signup success", response.data);
       
     } catch (error:any) {
