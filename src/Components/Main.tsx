@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { Meteors } from "@/Components/ui/meteors";
 import { CONTRACT_ADDRESSES } from "../utils/constants";
 import { ConnectWallet,darkTheme,} from "@thirdweb-dev/react"
-
+import axios from "axios"
 import Image from 'next/image';
 
 
@@ -22,6 +22,8 @@ import {
 } from "@/Components/ui/dialog"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
+import { id } from 'ethers/lib/utils';
+import { log } from 'console';
 
 
 
@@ -29,9 +31,10 @@ import { Label } from "@/Components/ui/label"
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   const [nftBalance, setNftBalance] = useState<number | null>(null);
+  const [contadd , setcontadd] = useState({
+    contractaddress : ""
+  })
 
-
-  // Function to fetch NFT balance, which can now safely use the walletAddress from the hook
   const fetchNFTBalance = async () => {
     if (!walletAddress) return; // Ensure walletAddress is not null or undefined
 
@@ -48,6 +51,18 @@ const Main: React.FC = () => {
     }
   };
 
+  const Setaddress = async () => {
+    try {
+      const response = await axios.post("/contract", contadd)
+      console.log("signup success", response.data);
+      
+    } catch (error:any) {
+      console.log("failed to get");
+      
+    }
+  }
+  
+ 
   return (
     <div className=' h-screen w-screen flex flex-col justify-center items-center' style={{
       backgroundImage: "url('/sold_desktop.20ec5a55.png')",
@@ -105,25 +120,28 @@ const Main: React.FC = () => {
         </>
       ) : (
         <>
-         <Dialog>
+         <Dialog > 
          <span className='text-white '>yay! You are eligible for your ERC-20 </span>
       <DialogTrigger asChild>
        <span className='text-red-600 cursor-pointer'>claim it</span>
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-[425px]">
-        
+      <form method='POST'>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
+            
             <Label htmlFor="name" className="text-right">
               Sol Wallet Address
             </Label>
-            <Input id="name" className="col-span-3" />
+            <Input value={contadd.contractaddress}  id="solcontract" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Done</Button>
+          <Button type="submit" onClick={Setaddress} >Done</Button>
+         
         </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
         </>
