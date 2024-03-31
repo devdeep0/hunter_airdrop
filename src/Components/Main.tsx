@@ -70,8 +70,8 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         const sdk = new ThirdwebSDK(new ethers.providers.Web3Provider(window.ethereum));
         const contract = await sdk.getContract(CONTRACT_ADDRESSES.nftContract);
         const balance = await contract.erc721.balanceOf(walletAddress);
-        //setNftBalance(balance.toNumber());
-        setNftBalance(5);
+        setNftBalance(balance.toNumber());
+        //setNftBalance(5);
       }
     } catch (error) {
       console.error("Failed to fetch NFT balance:", error);
@@ -140,6 +140,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         </>
       ) : (
         <>
+         <p className='text-white'>NFT Balance: {nftBalance}</p>
          <Dialog > 
          <span className='text-white '>yay! You are eligible for your ERC-20 </span>
       <DialogTrigger asChild>
