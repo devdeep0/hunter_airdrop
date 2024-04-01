@@ -10,7 +10,6 @@ import axios from "axios"
 import Image from 'next/image';
 import { collection, addDoc } from "firebase/firestore"; 
 import {db} from "@/Firebase/firebase"
-
 import { Button } from "@/Components/ui/button"
 import {
   Dialog,
@@ -34,26 +33,28 @@ import Confetti from "react-confetti";
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   
-  const [nftBalance, setNftBalance] = useState<number | null>(null);
-
+  const [nftBalance, setNftBalance] = useState<number >(0);
+  const [showConfetti, setShowConfetti] = useState <boolean> (false);
   const [contadd , setcontadd] = useState({
     nft_balance   : "",
     user_address : "",
     soladdress : "",
-   
+    token_allocation : "",
   })
   
-
+  const tokenAllocation = nftBalance * 694200
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   if (nftBalance !== null && walletAddress !== undefined) {
     await addDoc(collection(db, 'items'), {
-      nft_balance: nftBalance,
+      token_allocation : tokenAllocation, 
+      nft_balance: nftBalance ,
       user_address: walletAddress.trim(),
       soladdress: contadd.soladdress.trim(),
     });
   
     setcontadd({ 
+      token_allocation : tokenAllocation.toString(), 
       nft_balance: nftBalance.toString(), 
       user_address: walletAddress.toString(),
       soladdress: '',
@@ -77,7 +78,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       }
     } catch (error) {
       console.error("Failed to fetch NFT balance:", error);
-      setNftBalance(null); // Reset or handle the error as appropriate
+      setNftBalance(0); // Reset or handle the error as appropriate
     }
   };
   
@@ -86,13 +87,13 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 
  
   return (
-    <div className=' h-screen w-screen flex flex-col justify-center items-center' style={{
+    <div className={`h-screen w-screen flex flex-col justify-center items-center ${showConfetti ? 'blurred-background' : ''}`} style={{
       backgroundImage: "url('/sold_desktop.20ec5a55.png')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat'
     }}>
-      
+      {showConfetti && <Confetti width={2000} height={900} recycle={false} />}
       {walletAddress ? (
         <>
          <div>
@@ -175,10 +176,10 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         <DialogFooter>
         <DialogClose asChild>  
           <Button onClick={() => {
-            <Confetti width={1000} height={1000} recycle={false} />
+            setShowConfetti(true);
         toast({
           title: "Wallet Submitted!",
-          description: `You are eligible to claim ${nftBalance * 694200}`
+          description: `You are eligible to claim ${nftBalance * 694200}`,
           
         })
       }} type="submit" >Done</Button>
