@@ -20,6 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/Components/ui/dialog"
 import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label"
@@ -28,12 +29,13 @@ import { log } from 'console';
 import { ToastAction } from "@/Components/ui/toast"
 import { useToast } from "@/Components/ui/use-toast"
 
-
+import Confetti from "react-confetti";
 
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   
   const [nftBalance, setNftBalance] = useState<number | null>(null);
+
   const [contadd , setcontadd] = useState({
     nft_balance   : "",
     user_address : "",
@@ -171,14 +173,16 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
           </div>
         </div>
         <DialogFooter>
+        <DialogClose asChild>  
           <Button onClick={() => {
+            <Confetti width={1000} height={1000} recycle={false} />
         toast({
           title: "Wallet Submitted!",
-          description: "Please follow our socials for more information.",
+          description: `You are eligible to claim ${nftBalance * 694200}`
           
         })
       }} type="submit" >Done</Button>
-         
+         </DialogClose>
         </DialogFooter>
         </form>
       </DialogContent>
