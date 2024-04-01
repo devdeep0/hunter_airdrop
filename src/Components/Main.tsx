@@ -95,56 +95,68 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         <>
          <div>
          <div className="">
-      <div className=" w-full relative max-w-xs">
+      <div className=" w-[300px] relative max-w-xs">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
-          <div className="h-5 w-5 rounded-full border flex items-center justify-center mb-4 border-gray-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-2 w-2 text-gray-300"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25"
-              />
-            </svg>
-          </div>
- 
-          <h1 className="font-bold text-xl text-white mb-4 relative z-50">
-           Balance
-          </h1>
- 
-          <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
-            Check if you have got enough balance!
-          </p>
           
-          <button className="p-[3px] relative"  onClick={fetchNFTBalance}>
+ 
+         
+        <div className='flex justify-center items-center w-full'>
+          <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
+          Check you Airdrop allocation 
+          </p>
+          </div>
+          <div className='flex items-center justify-center w-full'>
+          <button className=" p-[3px] relative"  onClick={fetchNFTBalance}>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-        <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
-        Check Balance
+        <div className=" h-[40px] w-[150px] flex items-center justify-center py-2 text-md bg-black rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+        Check Eligibilty
         </div>
       </button>
+      </div>
 
       { nftBalance !== null && (
     <>
       
       {nftBalance === 0 ? (
         <>
-        <p className='text-white'>NFT Balance: {nftBalance}</p>
+        <p className='text-white'>Toadz Balance: {nftBalance}</p>
         <p className='text-red-600'>Sorry, you are not eligible for this!</p>
         </>
       ) : (
         <>
-         <p className='text-white'>NFT Balance: {nftBalance}</p>
+       
+        <div className='mt-4 flex items-center justify-center w-full'>
+         <p className='text-white'>Toadz Balance: {nftBalance}</p>
+         </div>
          <Dialog > 
-         <span className='text-white '>yay! You are eligible for your ERC-20 </span>
       <DialogTrigger asChild>
-       <span className='text-red-600 cursor-pointer'>claim it</span>
+        <div className='mt-5 flex items-center justify-center w-full'>
+      <button className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6  text-white inline-block">
+        <span className="absolute inset-0 overflow-hidden rounded-full">
+          <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(167,84,246,0.6)_0%,rgba(101,102,240,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+        </span>
+        <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10 ">
+          <span>{`Claim Airdrop`}</span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.5"
+              d="M10.75 8.75L14.25 12L10.75 15.25"
+            ></path>
+          </svg>
+        </div>
+        <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
+      </button>
+      </div>
       </DialogTrigger>
       
       <DialogContent className="sm:max-w-[425px]">
@@ -161,8 +173,8 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         <DialogFooter>
           <Button onClick={() => {
         toast({
-          title: "You did it",
-          description: "Thanks for being with us!",
+          title: "Wallet Submitted!",
+          description: "Please follow our socials for more information.",
           
         })
       }} type="submit" >Done</Button>
@@ -192,32 +204,18 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       <div className=" w-full relative max-w-xs">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] bg-red-500 rounded-full blur-3xl" />
         <div className="relative shadow-xl bg-gray-900 border border-gray-800  px-4 py-8 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
-          <div className="h-5 w-5 rounded-full border flex items-center justify-center mb-4 border-gray-500">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-2 w-2 text-gray-300"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25"
-              />
-            </svg>
-          </div>
+          
  
           <h1 className="font-bold text-xl text-white mb-4 relative z-50">
-            Please Connect Your Wallet
+           Cryptoadz Airdrop
           </h1>
  
           <p className="font-normal text-base text-slate-500 mb-4 relative z-50">
-            Please connect your wallet in order to have more access to our features!
+          Connect your wallet to check airdrop allocation!
           </p>
- 
+        <div className='flex justify-center items-center w-full'>
           <ConnectWallet
+          className=''
         theme={darkTheme({
           colors: {
             accentButtonText: "#ededef",
@@ -225,7 +223,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
           },
         })}
         modalSize={"wide"} />
- 
+        </div>
           {/* Meaty part - Meteor effect */}
           <Meteors number={20} />
         </div>
