@@ -4,7 +4,7 @@ import { ConnectWallet,darkTheme,} from "@thirdweb-dev/react"
 
 function Header() {
   return (
-    <div className='flex justify-center items-center mt-10 absolute right-0 mr-10'> 
+    <div className='flex justify-center items-center mt-10 absolute right-0 mr-10'>
    
         <ConnectWallet
         theme={darkTheme({
