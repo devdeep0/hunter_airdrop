@@ -40,6 +40,8 @@ interface ContAdd {
   nftNumber: string[]; // Explicitly declaring that nftNumber is an array of strings
 }
 
+import {  query, where, getDocs, } from 'firebase/firestore';
+
 
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
@@ -47,6 +49,7 @@ const Main: React.FC = () => {
   const [nftBalance, setNftBalance] = useState<number >(0);
   const [showConfetti, setShowConfetti] = useState <boolean> (false);
   const [nftNumber, setNftNumber] = useState<string[]>([]);
+  
   const [contadd, setContadd] = useState<ContAdd>({
     nft_balance   : "",
     user_address : "",
@@ -54,29 +57,40 @@ const Main: React.FC = () => {
     token_allocation : "",
     nftNumber : [],
   })
-  
+
   const tokenAllocation = nftBalance * 694200
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   if (nftBalance !== null && walletAddress !== undefined) {
-    await addDoc(collection(db, 'items'), {
-      token_allocation : tokenAllocation, 
-      nft_balance: nftBalance ,
-      user_address: walletAddress.trim(),
-      soladdress: contadd.soladdress.trim(),
-      nftNumber: nftNumber,
-    });
-  
-    setContadd({ 
-      token_allocation : tokenAllocation.toString(), 
-      nft_balance: nftBalance.toString(), 
-      user_address: walletAddress.toString(),
-      soladdress: '',
-      nftNumber: nftNumber,
-    });
+    const itemsCollection = collection(db, 'items');
+    const q = query(itemsCollection, where("user_address", "==", walletAddress.trim()));
+
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      // No documents found with the same user_address, safe to add new document
+      await addDoc(itemsCollection, {
+          token_allocation: tokenAllocation,
+          nft_balance: nftBalance,
+          user_address: walletAddress.trim(),
+          soladdress: contadd.soladdress.trim(),
+          nftNumber: nftNumber,
+      });
+
+      setContadd({
+          token_allocation: tokenAllocation.toString(),
+          nft_balance: nftBalance.toString(),
+          user_address: walletAddress.toString(),
+          soladdress: '',
+          nftNumber: nftNumber,
+      });
   } else {
-    console.error("nftBalance or walletAddress is null");
+      // Document with the same user_address found, handle accordingly
+      console.error("A document with the same user_address already exists.");
   }
+} else {
+  console.error("nftBalance or walletAddress is null");
+}
 
  };
 
