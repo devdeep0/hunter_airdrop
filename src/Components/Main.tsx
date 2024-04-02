@@ -124,13 +124,28 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
 
  
   return (
+   
     <div className={`h-screen w-screen flex flex-col justify-center items-center ${showConfetti ? 'blurred-background' : ''}`} style={{
       backgroundImage: "url('/sold_desktop.20ec5a55.png')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat'
     }}>
-      {showConfetti && <Confetti width={2000} height={900} recycle={false} />}
+ {showConfetti && (
+  <>
+    <Confetti width={2000} height={900} recycle={false} />
+    <div className='absolute bottom-2 z-10'>
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/jT_lwrjQNFw?autoplay=1&mute=1"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen>
+      </iframe>
+    </div>
+  </>
+)}
       {walletAddress ? (
         <>
          <div>
@@ -176,7 +191,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         <span className="absolute inset-0 overflow-hidden rounded-full">
           <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(167,84,246,0.6)_0%,rgba(101,102,240,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
         </span>
-        <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10 ">
+        <div className="relative flex space-x-2 items-center z-5 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10 ">
           <span>{`Claim Airdrop`}</span>
           <svg
             width="16"
@@ -220,7 +235,9 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
           
         })
       }} type="submit" >Done</Button>
+     
          </DialogClose>
+        
         </DialogFooter>
         </form>
       </DialogContent>
@@ -273,6 +290,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     </div>
       )}
     </div>
+   
   );
 }
 
