@@ -11,6 +11,8 @@ import Image from 'next/image';
 import { collection, addDoc } from "firebase/firestore"; 
 import {db} from "@/Firebase/firebase"
 import { Button } from "@/Components/ui/button"
+import { BigNumber } from 'ethers';
+
 import {
   Dialog,
   DialogContent,
@@ -30,16 +32,27 @@ import { useToast } from "@/Components/ui/use-toast"
 
 import Confetti from "react-confetti";
 
+interface ContAdd {
+  nft_balance: string;
+  user_address: string;
+  soladdress: string;
+  token_allocation: string;
+  nftNumber: string[]; // Explicitly declaring that nftNumber is an array of strings
+}
+
+
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   
   const [nftBalance, setNftBalance] = useState<number >(0);
   const [showConfetti, setShowConfetti] = useState <boolean> (false);
-  const [contadd , setcontadd] = useState({
+  const [nftNumber, setNftNumber] = useState<string[]>([]);
+  const [contadd, setContadd] = useState<ContAdd>({
     nft_balance   : "",
     user_address : "",
     soladdress : "",
     token_allocation : "",
+    nftNumber : [],
   })
   
   const tokenAllocation = nftBalance * 694200
@@ -51,13 +64,15 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
       nft_balance: nftBalance ,
       user_address: walletAddress.trim(),
       soladdress: contadd.soladdress.trim(),
+      nftNumber: nftNumber,
     });
   
-    setcontadd({ 
+    setContadd({ 
       token_allocation : tokenAllocation.toString(), 
       nft_balance: nftBalance.toString(), 
       user_address: walletAddress.toString(),
       soladdress: '',
+      nftNumber: nftNumber,
     });
   } else {
     console.error("nftBalance or walletAddress is null");
@@ -73,6 +88,11 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         const sdk = new ThirdwebSDK(new ethers.providers.Web3Provider(window.ethereum));
         const contract = await sdk.getContract(CONTRACT_ADDRESSES.nftContract);
         const balance = await contract.erc721.balanceOf(walletAddress);
+        const NFTNumber = await contract.call('walletOfOwner', [walletAddress]);
+
+        const nftIds = NFTNumber.map((nft: BigNumber) => parseInt(nft._hex, 16));
+        console.log(nftIds);
+        setNftNumber(nftIds);
         setNftBalance(balance.toNumber());
         //setNftBalance(5);
       }
@@ -170,7 +190,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
             <Label htmlFor="name" className="text-right">
               Sol Wallet Address
             </Label>
-            <Input  onChange={(e) => setcontadd({ ...contadd, soladdress: e.target.value })}  value={contadd.soladdress}  id="solcontract" className="col-span-3" />
+            <Input  onChange={(e) => setContadd({ ...contadd, soladdress: e.target.value })}  value={contadd.soladdress}  id="solcontract" className="col-span-3" />
           </div>
         </div>
         <DialogFooter>
