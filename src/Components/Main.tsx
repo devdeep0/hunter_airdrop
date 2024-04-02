@@ -46,7 +46,7 @@ import {  query, where, getDocs, } from 'firebase/firestore';
 const Main: React.FC = () => {
   const walletAddress = useAddress(); // Correctly use the hook at the top level
   
-  const [nftBalance, setNftBalance] = useState<number >(0);
+  const [nftBalance, setNftBalance] = useState<number | null>(null);
   const [showConfetti, setShowConfetti] = useState <boolean> (false);
   const [nftNumber, setNftNumber] = useState<string[]>([]);
   
@@ -57,8 +57,11 @@ const Main: React.FC = () => {
     token_allocation : "",
     nftNumber : [],
   })
-
-  const tokenAllocation = nftBalance * 694200
+  var tokenAllocation = 0;
+if (tokenAllocation !== null && nftBalance !== null) {
+   tokenAllocation = nftBalance * 694200
+}
+  
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   if (nftBalance !== null && walletAddress !== undefined) {
