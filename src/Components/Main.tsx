@@ -231,7 +231,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
             setShowConfetti(true);
         toast({
           title: "Wallet Submitted!",
-          description: `You are eligible to claim ${nftBalance * 694200}`,
+          description: `You are eligible to claim ${nftBalance * 694200} tokens.`,
           
         })
       }} type="submit" >Done</Button>
