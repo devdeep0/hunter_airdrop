@@ -65,7 +65,7 @@ if (tokenAllocation !== null && nftBalance !== null) {
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   if (nftBalance !== null && walletAddress !== undefined) {
-    const itemsCollection = collection(db, 'items');
+    const itemsCollection = collection(db, 'toadz');
     const q = query(itemsCollection, where("user_address", "==", walletAddress.trim()));
 
     const querySnapshot = await getDocs(q);
