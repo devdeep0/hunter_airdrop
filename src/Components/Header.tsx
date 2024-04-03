@@ -9,8 +9,9 @@ function Header() {
         <ConnectWallet
         theme={darkTheme({
           colors: {
-            accentButtonText: "#ededef",
-            primaryButtonBg: "#ff500d",
+            accentButtonText: "#010001",
+            primaryButtonBg: "#0c0a12",
+            primaryButtonText: "#ededef",
           },
         })}
         modalSize={"wide"} />

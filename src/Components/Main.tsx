@@ -59,13 +59,13 @@ const Main: React.FC = () => {
   })
   var tokenAllocation = 0;
 if (tokenAllocation !== null && nftBalance !== null) {
-   tokenAllocation = nftBalance * 694200
+   tokenAllocation = nftBalance * 69420 
 }
   
 const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault();
   if (nftBalance !== null && walletAddress !== undefined) {
-    const itemsCollection = collection(db, 'items');
+    const itemsCollection = collection(db, 'mistle_toadz');
     const q = query(itemsCollection, where("user_address", "==", walletAddress.trim()));
 
     const querySnapshot = await getDocs(q);
@@ -126,7 +126,7 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
   return (
    
     <div className={`h-screen w-screen flex flex-col justify-center items-center ${showConfetti ? 'blurred-background' : ''}`} style={{
-      backgroundImage: "url('/sold_desktop.20ec5a55.png')",
+      backgroundImage: "url('/toadz_desktop.bd4ec1b7.png')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat'
