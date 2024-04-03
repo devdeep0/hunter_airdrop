@@ -105,10 +105,10 @@ const addItem = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         const sdk = new ThirdwebSDK(new ethers.providers.Web3Provider(window.ethereum));
         const contract = await sdk.getContract(CONTRACT_ADDRESSES.nftContract);
         const balance = await contract.erc721.balanceOf(walletAddress);
-        const NFTNumber = await contract.call('walletOfOwner', [walletAddress]);
-
-        const nftIds = NFTNumber.map((nft: BigNumber) => parseInt(nft._hex, 16));
-        console.log(nftIds);
+        //const NFTNumber = await contract.call('walletOfOwner', [walletAddress]);
+        const NFTNumber = await contract.erc721.getOwned(walletAddress);
+        const nftIds = NFTNumber.map(nft => nft.metadata.id);
+        //console.log(nftIds);
         setNftNumber(nftIds);
         setNftBalance(balance.toNumber());
         //setNftBalance(5);
